@@ -49,14 +49,15 @@
         const weatherIcon = document.querySelector(".weather-icon");
         async function checkWeather(city) {
             const response = await fetch(apiUrl + city );
-            if (response.status == 404) {
+            let data = await response.json();
+            if (data.cod == 404) {
                 document.querySelector(".error").style.display = "block";
                 document.querySelector(".weather").style.display = "none";
-
-            } else {
+                return;
+            } 
 
                 document.querySelector(".error").style.display = "none";
-                let data = await response.json();
+               
 
                 console.log(data);
                 document.querySelector(".city").innerHTML = data.name;
@@ -86,7 +87,7 @@
 
             }
 
-        }
+        
 
         searchBtn.addEventListener("click", () => {
             checkWeather(searchBox.value);
